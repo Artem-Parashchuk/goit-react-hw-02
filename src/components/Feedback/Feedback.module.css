@@ -1,0 +1,11 @@
+.list {
+    max-width: 400px;
+    margin: 50px auto 0;
+}
+.item{
+    font-size: 18px;
+    line-height: 1.5;
+    &:not(:last-child) {
+        margin-bottom: 5px;
+    }
+}

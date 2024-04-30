@@ -1,0 +1,12 @@
+.wrapper{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.title{
+    text-align: center;
+}
+.description{
+    text-align: center;
+    margin-top: 15px;
+    font-size: 18px;
+}

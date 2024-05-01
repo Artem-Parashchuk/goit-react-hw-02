@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Description from "./components/Description/Description";
 import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
 
+const date = {
+  good: 0,
+  neutral: 0,
+  bad: 0,
+};
+
 function App() {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedback, setFeedback] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('feedback')) || date
   });
+
+  useEffect(() => window.localStorage.setItem('feedback', JSON.stringify(feedback)), [feedback]);
+
 
   const updateFeedback = (feedbackType) => {
     setFeedback((prev) => ({
@@ -23,14 +30,28 @@ function App() {
     (acum, value) => acum + value,
     0
   );
+
+  const resetFeedback = () => {
+    setFeedback(date);
+  };
+
   return (
     <>
       <Description />
       <Options
         feedback={feedback}
         updateFeedback={updateFeedback}
+        totalFeedback={totalFeedback}
+        resetFeedback={resetFeedback}
       />
-      {totalFeedback > 0 ? <Feedback feedback={feedback} /> : <Notification />}
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={feedback}
+          totalFeedback={totalFeedback}
+        />
+      ) : (
+        <Notification />
+      )}
     </>
   );
 }

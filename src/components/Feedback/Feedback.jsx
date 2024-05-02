@@ -11,7 +11,7 @@ const Feedback = ({
       <li className={s.item}>Neutral: {neutral}</li>
       <li className={s.item}>Bad: {bad}</li>
       <li className={s.item}>Total: {totalFeedback}</li>
-      <li className={s.item}>Positive: {positiveFeedback(good)}%</li>
+      <li className={s.item}>Positive: {positiveFeedback}%</li>
     </ul>
   );
 };

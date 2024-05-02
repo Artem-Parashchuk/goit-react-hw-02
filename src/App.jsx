@@ -5,7 +5,7 @@ import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
 
-const date = {
+const defaultFeedback = {
   good: 0,
   neutral: 0,
   bad: 0,
@@ -13,11 +13,15 @@ const date = {
 
 function App() {
   const [feedback, setFeedback] = useState(() => {
-    return JSON.parse(window.localStorage.getItem('feedback')) || date
+    return (
+      JSON.parse(window.localStorage.getItem("feedback")) || defaultFeedback
+    );
   });
 
-  useEffect(() => window.localStorage.setItem('feedback', JSON.stringify(feedback)), [feedback]);
-
+  useEffect(
+    () => window.localStorage.setItem("feedback", JSON.stringify(feedback)),
+    [feedback]
+  );
 
   const updateFeedback = (feedbackType) => {
     setFeedback((prev) => ({
@@ -32,7 +36,11 @@ function App() {
   );
 
   const resetFeedback = () => {
-    setFeedback(date);
+    setFeedback(defaultFeedback);
+  };
+
+  const positiveFeedback = (good) => {
+    return Math.round((good / totalFeedback) * 100);
   };
 
   return (
@@ -48,6 +56,7 @@ function App() {
         <Feedback
           feedback={feedback}
           totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
         />
       ) : (
         <Notification />
